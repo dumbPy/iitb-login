@@ -6,7 +6,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(  name='iitb-login',
-        version='0.1.1',
+        version='0.1.2',
         description='iitb login script with ssh key based credentials encryption',
         long_description=long_description,
         long_description_content_type='text/markdown',
@@ -15,8 +15,7 @@ setup(  name='iitb-login',
         author_email='dumbpyx@gmail.com',
         python_requires='>=3.3',
         install_requires=['paramiko', 'scrapy', 'click',
-                            'argparse','cryptography','getpass','pickle',
-                        ],
+                            'argparse','cryptography' ],
         scripts=['scripts/iitb'],
         # There are no packages, just a login script
         packages=[]

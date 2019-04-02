@@ -97,9 +97,9 @@ class IITB_Spider(scrapy.Spider):
 
 
     def get_username(self,response):
-        return response.xpath('//div[@class="scrolling"]//td[1]/center/text()')[0].extract().strip()
+        return response.xpath('//div[@class="scrolling"]//tr[1]/td[1]/center/text()')[0].extract().strip()
     def get_ip(self,response):
-        return response.xpath('//div[@class="scrolling"]//td[2]/center/text()')[0].extract().strip()
+        return response.xpath('//input[@name="ip" and @checked="checked"]/@value')[0].extract().strip()
 
 
 def get_crypto()-> fernet.Fernet:

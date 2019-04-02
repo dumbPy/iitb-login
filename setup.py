@@ -6,7 +6,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(  name='iitb-login',
-        version='0.1.2',
+        version='0.1.3',
         description='iitb login script with ssh key based credentials encryption',
         long_description=long_description,
         long_description_content_type='text/markdown',

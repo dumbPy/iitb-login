@@ -5,12 +5,12 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-setup(  name='iitb_login',
+setup(  name='iitb-login',
         version='0.1.0',
         description='iitb login script with ssh key based credentials encryption',
         long_description=long_description,
         long_description_content_type='text/markdown',
-        url='https://github/com/dumbPy/iitb_login',
+        url='https://github/com/dumbPy/iitb-login',
         author='Sufiyan Adhikari',
         author_email='dumbpyx@gmail.com',
         python_requires='>=3.3',

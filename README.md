@@ -3,7 +3,7 @@
 This package only consists a login script for headless login to `internet.iitb.ac.in` on any of the iitb servers.
 
 ### Install
-`pip install iitb_login` should install the script. You can also try `pip install git+https://github.com/dumbPy/iitb_login.git`
+`pip install iitb-login` should install the script. You can also try `pip install git+https://github.com/dumbPy/iitb-login.git`
 
 ### Usage
 ```

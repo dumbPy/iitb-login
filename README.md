@@ -2,6 +2,23 @@
 
 This package only consists a login script for headless login to `internet.iitb.ac.in` on any of the iitb servers.
 
+### Install
+`pip install iitb_login` should install the script. You can also try `pip install git+https://github.com/dumbPy/iitb_login.git`
+
+### Usage
+```
+$ iitb login # to login. Enter username and password when prompted
+# Enter username: username
+# enter password: 
+# Logged In As :  username
+# Your IP:        10.119.255.255
+
+
+$ iitb logout # to logout
+$ iitb status # or just iitb to check status of login
+
+```
+
 ### How It Works
 #### Scrapy Spider
 

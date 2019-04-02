@@ -1,0 +1,7 @@
+paramiko
+scrapy
+click
+argparse
+cryptography
+getpass
+pickle

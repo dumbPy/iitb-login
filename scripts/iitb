@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import scrapy
 from scrapy.crawler import CrawlerProcess
 import paramiko
@@ -8,7 +10,7 @@ import logging, os, getpass, pickle
 
 class IITB_Spider(scrapy.Spider):
     name = 'iitb_crawler'
-    
+
     def __init__(self, command):
         self.command = command
 
@@ -19,7 +21,7 @@ class IITB_Spider(scrapy.Spider):
     def start_requests(self):
         url = 'https://internet.iitb.ac.in'
         yield scrapy.Request(url, callback=self.parse_page)
-    
+
     def parse_page(self, response):
         if self.command=='logout':
             return self.logout(response)
@@ -33,18 +35,18 @@ class IITB_Spider(scrapy.Spider):
     def logout(self, response):
         if self.is_logged_in(response):
             # print('In Logout Handler, sending logout request!!!')
-            request = scrapy.FormRequest.from_response(response, formname='auth', 
+            request = scrapy.FormRequest.from_response(response, formname='auth',
                                                    formdata={'ip':self.get_ip(response),
-                                                             'etype':'pg', 
-                                                             'button':'Logout', 
-                                                             'etype':'pg'}, 
+                                                             'etype':'pg',
+                                                             'button':'Logout',
+                                                             'etype':'pg'},
                                                    callback=self.confirm)
             request.meta['from']='logout'
             yield request
         else: print('Seems to be logged out already!!')
-            
+
     def login(self, response):
-        if self.is_logged_in(response): 
+        if self.is_logged_in(response):
             print(f'Already Logged In as:    {self.get_username(response)}')
             print(f'Your IP:                 {self.get_ip(response)}')
         else:
@@ -52,15 +54,15 @@ class IITB_Spider(scrapy.Spider):
             creds = read_creds()
             username = creds['username']
             password = creds['password']
-            request =  scrapy.FormRequest.from_response(response, formname='auth', 
-                                                   formdata={'uname':username, 
-                                                             'passwd':password, 
-                                                             'button':'Login'}, 
+            request =  scrapy.FormRequest.from_response(response, formname='auth',
+                                                   formdata={'uname':username,
+                                                             'passwd':password,
+                                                             'button':'Login'},
                                                    callback=self.confirm)
             request.meta['from']='login'
             request.meta['creds']=creds
             yield request
-            
+
     def confirm(self, response):
         # print('reached confirm')
         url = 'https://internet.iitb.ac.in'
@@ -69,7 +71,7 @@ class IITB_Spider(scrapy.Spider):
         except: pass
         request.meta['from']=response.meta['from']
         yield request
-        
+
     def confirm_response(self, response):
         # print('reached confirm response')
         if response.meta['from']=='login' and 'logout' in response.url:
@@ -81,19 +83,19 @@ class IITB_Spider(scrapy.Spider):
         elif response.meta['from']=='logout' and not 'logout' in response.url:
             print('Logged Out')
         elif response.meta['from'] == 'status':
-            if 'logout' in response.url: 
+            if 'logout' in response.url:
                 print(f'Logged in as {self.get_username(response)}')
                 print(f'Your IP:     {self.get_ip(response)}')
             else: print('Not Logged In to internet.iitb.ac.in')
         else:
             print(response.url)
             print(f'{response.meta["from"]} Failed !!!!!')
-    
+
     def is_logged_in(self, response):
         if 'logout' in response.url: return True
         else: return False
 
-        
+
     def get_username(self,response):
         return response.xpath('//div[@class="scrolling"]//td[1]/center/text()')[0].extract().strip()
     def get_ip(self,response):
@@ -139,7 +141,7 @@ def decrypt(crypto:fernet.Fernet, encrypted:bytes)-> str:
     return crypto.decrypt(encrypted).decode()
 
 def read_creds()->dict:
-    
+
     path = os.path.expanduser('~/.ssh/iitb_login_creds')
     crypto = get_crypto()
     if crypto is None or not os.path.exists(path):
@@ -153,30 +155,30 @@ def read_creds()->dict:
             creds=pickle.load(f)
             assert(len(creds)==2),"credentials read from ~/.ssh/iitb_login_creds are faulty. \
             Please delete the file and try storing new credentials"
-            
+
         return {'username': decrypt(crypto, creds['username']),
                 'password': decrypt(crypto, creds['password'])}
 def write_creds(crypto:fernet.Fernet, creds:dict)->None:
-    
+
     path = os.path.expanduser('~/.ssh/iitb_login_creds')
     if os.path.exists(path): return
 
     print('This Script uses your ssh key to encrypt credentials')
     if not click.confirm('Save credentials: '): return
-    
+
     creds['username'] = encrypt(crypto, creds['username'])
     creds['password'] = encrypt(crypto, creds['password'])
     with open(path, 'wb') as f:
         pickle.dump(creds, f)
-        
+
     print('Credentials written to file: ~/.ssh/iitb_login_creds and only be decrypted with your ssh key')
 
 
 if __name__ == '__main__':
     parser = ArgumentParser(
         description='Script for headless login and logout on all IITB servers')
-    parser.add_argument('command', nargs='?', default='status', 
-            choices=['login', 'logout', 'status'], 
+    parser.add_argument('command', nargs='?', default='status',
+            choices=['login', 'logout', 'status'],
             help='you can either pass login, logout or status')
 
     args = parser.parse_args()
@@ -185,4 +187,4 @@ if __name__ == '__main__':
     crawler = CrawlerProcess(settings={'LOG_ENABLED': True, 'LOG_LEVEL':'ERROR'})
     crawler.crawl(IITB_Spider, command=args.command)
     crawler.start()
-    
+

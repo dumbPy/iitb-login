@@ -1,0 +1,8 @@
+README.md
+setup.py
+iitb_login.egg-info/PKG-INFO
+iitb_login.egg-info/SOURCES.txt
+iitb_login.egg-info/dependency_links.txt
+iitb_login.egg-info/requires.txt
+iitb_login.egg-info/top_level.txt
+scripts/iitb

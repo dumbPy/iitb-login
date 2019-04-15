@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: iitb-login
-Version: 0.1.3
+Version: 0.1.4
 Summary: iitb login script with ssh key based credentials encryption
 Home-page: https://github/com/dumbPy/iitb-login
 Author: Sufiyan Adhikari

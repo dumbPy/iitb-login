@@ -3,7 +3,7 @@
 This package consists a login script for headless login to `internet.iitb.ac.in` on any of the iitb servers.  
 It uses ssh key to encrypt your credentials safely for hastle-free login.
 
-### Install
+## Install
 `pip install iitb-login` should install the script. 
 
 Works strictly on python 3.x versions. Does not support python 2.7 or older
@@ -73,9 +73,9 @@ The keys from `paramiko.Agent().get_keys()` have a `sign_ssh_data()` method that
 
 ### Version History
 `v 0.1.2` First release. wrong ip address parsing  
-`v 0.1.3` ip parsing patched
-`v 0.1.4` Allows choosing ssh key in case of multiple keys
-`v 0.2.0` First Stable Release. README updated, setup.py url fixed.
+`v 0.1.3` ip parsing patched  
+`v 0.1.4` Allows choosing ssh key in case of multiple keys  
+`v 0.2.1` First Stable Release. README updated, setup.py url fixed.
 
-# Future Changes
-In case the script becomes outdated and needs updation, feel free to make a pull request.
+## Future Changes
+In case the script becomes outdated and needs an update, feel free to make a pull request, or create an issue on github.
